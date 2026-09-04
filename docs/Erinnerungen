@@ -1,0 +1,13 @@
+Eine Erinnerung soll eine Stunde vorher rausgeschickt werden, um das Auto dann umzuparken
+
+Montag 20:00
+→ move_by: Dienstag 12:00
+→ reminder_at: Dienstag 11:00
+
+Freitag 20:00
+→ move_by: Montag 12:00
+→ reminder_at: Montag 11:00
+
+Samstag 14:00
+→ move_by: Montag 12:00
+→ reminder_at: Montag 11:00

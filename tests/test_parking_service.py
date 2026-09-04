@@ -1,6 +1,7 @@
 from datetime import datetime
 
-from app.services.parking_service import get_parking_status
+from app.services.parking_service import get_parking_status, calculate_move_by, calculate_reminder_at
+
 
 def test_weekday_before_restriction():
     parked_at = datetime(2026, 9, 4,10,0)
@@ -37,3 +38,24 @@ def test_weekday_at_restriction_end_is_allowed():
 
     result = get_parking_status(parked_at)
     assert result["allowed"] is True
+
+def test_monday_evening_moves_by_tuesday_noon():
+    parked_at = datetime(2026, 9, 7, 20, 0)
+
+    move_by = calculate_move_by(parked_at)
+
+    assert move_by == datetime(2026, 9, 8, 12, 0)
+
+def test_friday_evening_moves_by_monday_noon():
+    parked_at = datetime(2026, 9, 4, 20, 0)
+
+    move_by = calculate_move_by(parked_at)
+
+    assert move_by == datetime(2026, 9, 7, 12, 0)
+
+def test_reminder_is_one_hour_before_move_by():
+    move_by = datetime(2026, 9, 8, 12, 0)
+
+    reminder_at = calculate_reminder_at(move_by)
+
+    assert reminder_at == datetime(2026, 9, 8, 11, 0)
